@@ -147,5 +147,30 @@ Route::post('/change/password', 'HomeController@ChangePassword');
 });
 
 
+
+Route::group(['prefix' => 'client', 'as' => 'client'], function () {
+    Route::get('/', ['as' => '.index', 'uses' => 'ClientController@index']);
+    Route::get('/supprimer/list/{items?}', ['as' => '.destroyList', 'uses' => 'ClientController@destroyList'])->where('items', '(.*)');    
+
+    Route::get('/create',['as'=>'.create', 'uses' => 'ClientController@create']);
+    Route::post('/create', ['as' => '.store', 'uses' => 'ClientController@store']);
+    Route::get('/destroy/{id_demande}', ['as' => '.destroy', 'uses' => 'ClientController@destroy']); 
+    Route::get('/state/{id_demande}', ['as' => '.state', 'uses' => 'ClientController@state']); 
+    Route::get('/edit/{id_demande}', ['as' => '.edit', 'uses' => 'ClientController@edit']);
+    Route::post('/update/{client}', ['as' => '.update', 'uses' => 'ClientController@update']);    
+    
+});
+
+Route::group(['prefix' => 'secteur', 'as' => 'secteur'], function () {
+    Route::get('/', ['as' => '.index', 'uses' => 'SecteurController@index']);
+    Route::get('/show/create',['as'=>'.show.create', 'uses' => 'SecteurController@create']);
+    Route::post('/create', ['as' => '.create', 'uses' => 'SecteurController@store']);
+    Route::post('/update/{id_secteur}', ['as' => '.update', 'uses' => 'SecteurController@update']);
+    Route::get('/destroy/{id_secteur}', ['as' => '.destroy', 'uses' => 'SecteurController@destroy']);    
+    Route::get('/edit/{id_secteur}', ['as' => '.edit', 'uses' => 'SecteurController@edit']);
+});
+
+
+
 Route::view('/sync', 'Home.sync');
 Route::post('/sync', 'HomeController@getDB');
