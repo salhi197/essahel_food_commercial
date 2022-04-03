@@ -16,7 +16,7 @@
         <link rel="shortcut icon" href="{{ asset('../../assets/images/brand/favicon.ico') }}" type="image/x-icon"/>
 
         <!-- TITLE -->
-        <title> TASSHIL </title>
+        <title> Essahel-Food Commercial </title>
 
         <!-- DASHBOARD CSS -->
 

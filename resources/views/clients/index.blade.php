@@ -26,7 +26,7 @@
                         </thead>
                         <tbody>
                             @foreach($clients as $client)
-                            <tr>
+                            <tr style="cursor:pointer;" onclick="client_prix({{ $client->id }});">
                                 <td>
                                     {{$client->id }}
                                 </td>
@@ -67,28 +67,44 @@
 @section('scripts')
 
 <script>
-        $(document).ready(function() {
+    
+    function client_prix(id_client) 
+    {
+    
+        window.location.href = "/client/edit_prix/"+id_client;
+
+        // fin
+    }
+
+    /**/
+</script>
+
+<script>
+        $(document).ready(function() 
+        {
         	var dynamic_form =  $("#dynamic_form").dynamicForm("#dynamic_form","#plus5", "#minus5", {
-		        limit:10,
-		        formPrefix : "dynamic_form",
-		        normalizeFullForm : false
-		    });
+	        limit:10,
+	        formPrefix : "dynamic_form",
+	        normalizeFullForm : false
+		});
 
-		    $("#dynamic_form #minus5").on('click', function(){
-		    	var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
-		    	if (initDynamicId === 2) {
-		    		$(this).closest('#dynamic_form').next().find('#minus5').hide();
-		    	}
-		    	$(this).closest('#dynamic_form').remove();
-		    });
+	    $("#dynamic_form #minus5").on('click', function()
+        {
+	    	var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
+	    	if (initDynamicId === 2) {
+	    		$(this).closest('#dynamic_form').next().find('#minus5').hide();
+	    	}
+	    	$(this).closest('#dynamic_form').remove();
+	    });
 
-		    $('#secteurFform').on('submit', function(event){
-	        	var values = {};
-				$.each($('#secteurFform').serializeArray(), function(i, field) {
-				    values[field.name] = field.value;
-				});
-				console.log(values)
-        	})
+	    $('#secteurFform').on('submit', function(event)
+        {
+        	var values = {};
+			$.each($('#secteurFform').serializeArray(), function(i, field) {
+			    values[field.name] = field.value;
+			});
+			console.log(values)
+    	})
         });
 
 

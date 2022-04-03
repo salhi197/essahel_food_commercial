@@ -19,19 +19,6 @@ class ClientController extends Controller
 {
 
 
-    public function destroyList(Request $request)
-    {
-        $data = explode(',',  $_GET['id']);
-        foreach ($data as $key => $c) {
-            if (strlen($c)) {
-                $client =  Client::find($c);
-                $client->delete();
-            }
-        }
-
-        return redirect()->back()->with('success', 'les Clients ont été supprimés ');           
-    }
-
     public function index()
     {
         $clients = Client::all();
@@ -40,14 +27,6 @@ class ClientController extends Controller
         return view('clients.index',compact('clients','secteurs'));
     }
 
-    public function state($id_client)
-    {
-        $client = Client::find($id_client);
-        DB::table('clients')
-            ->where('id',$client->id)
-            ->update(['etat'=>!$client->etat]);            
-        return Response::json($client);        
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -108,13 +87,6 @@ class ClientController extends Controller
         return view('clients.edit',compact('categories','communes','wilayas','client'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Produit  $client
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request,$client_id)
     {
         $client = Client::find($client_id);  
@@ -147,22 +119,48 @@ class ClientController extends Controller
         return redirect()->route('client.index')->with('success', 'le Client a été supprimé ');        
     }
 
-    public function stock($id_client)
+    public function edit_prix($id_client)
     {
+
         $client = Client::find($id_client);
-        $stocks = Stock::where('produit_id',$client->id)->orderBy('id','desc')->get();
-        $clients = Client::all();
-        $fournisseurs =Fournisseur::all();
-        $communes = Commune::all();
-        $wilayas =Wilaya::all();
-        return view('stocks.index',compact('produits','stocks','produits','fournisseurs','communes','wilayas'));
+
+        $produits = DB::select("select * from produits order by nom");
+
+        return view('clients.edit_prix',compact('produits','client'));
+
+        // code...
     }
 
-
-    public function printStock($id_client)
+    public function edit_prix_post($id_client,Request $request)
     {
-        dd('on est entrain de construire cette page ...');
+
+        DB::delete("delete from client_prix where id_client = '$id_client'");
+
+        $prix = ($request->all());
+
+        $produits = DB::select("select * from produits order by nom");
+
+        foreach ($produits as $produit) 
+        {
+            
+            $id_produit = $produit->id;
+
+            $price = $prix[$id_produit];
+
+            dump($price);
+
+            DB::insert("insert into client_prix (id_client,id_produit,prix) values('$id_client','$id_produit','$price')");
+
+            //
+        }
+        
+        dd("dd");
+
+        return view('clients.edit_prix',compact('produits','client'));
+
+        // code...
     }
 
 
+    //
 }
