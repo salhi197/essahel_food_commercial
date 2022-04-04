@@ -5,7 +5,8 @@
 
 
 @section('content')
-        <div class="container-fluid">
+
+        <div class="container content-area relative">
             <h1 class="mt-4 text-white"> Clients</h1>
             <div class="card mb-4">
                 <div class="card-header">
@@ -26,13 +27,13 @@
                         </thead>
                         <tbody>
                             @foreach($clients as $client)
-                            <tr style="cursor:pointer;" onclick="client_prix({{ $client->id }});">
-                                <td>
+                            <tr>
+                                <td style="cursor:pointer;" onclick="client_prix({{ $client->id }});" >
                                     {{$client->id }}
                                 </td>
-                                <td>{{$client->raison_sociale ?? $client->nom}}</td>
-                                <td>{{$client->getSecteur() }}</td>                                                
-                                <td>{{$client->telephone }}</td>                                                
+                                <td style="cursor:pointer;" onclick="client_prix({{ $client->id }});" >{{$client->raison_sociale ?? $client->nom}}</td>
+                                <td style="cursor:pointer;" onclick="client_prix({{ $client->id }});" >{{$client->getSecteur() }}</td>                                                
+                                <td style="cursor:pointer;" onclick="client_prix({{ $client->id }});" >{{$client->telephone }}</td>                                                
                                 <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal{{$client->id}}">
                                         Modifier

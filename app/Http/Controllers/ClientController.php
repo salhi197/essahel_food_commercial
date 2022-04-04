@@ -126,7 +126,9 @@ class ClientController extends Controller
 
         $produits = DB::select("select * from produits order by nom");
 
-        return view('clients.edit_prix',compact('produits','client'));
+        $prices=DB::select("select * from client_prix where id_client = '$id_client'");
+
+        return view('clients.edit_prix',compact('produits','client','prices'));
 
         // code...
     }
@@ -147,16 +149,12 @@ class ClientController extends Controller
 
             $price = $prix[$id_produit];
 
-            dump($price);
-
             DB::insert("insert into client_prix (id_client,id_produit,prix) values('$id_client','$id_produit','$price')");
 
             //
         }
-        
-        dd("dd");
 
-        return view('clients.edit_prix',compact('produits','client'));
+        return back();
 
         // code...
     }

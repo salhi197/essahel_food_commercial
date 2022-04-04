@@ -1,63 +1,93 @@
 @extends('layouts.app')
 
-@section('page_wrapper')
-@endsection
-
-
 @section('content')
 
-    <div class="container-fluid ">
-        
-        <h1 class="text-center" style="color:#ffffff"> Client : {!! $client->nom !!}</h1>
-        
-        <div class="card mb-4">
-        
+
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h4 class="page-title">Client : {!! $client->nom !!} </h4>
+</div>
+<!-- PAGE-HEADER END -->
+
+
+
+
+
+
+<!-- ROW-1 OPEN -->
+<div class="row">
+
+    <div class="col-md-12 col-lg-12">
+
+        <div class="card">
+
             <div class="card-header">
+                
+                <div class="card-title">Client : {!! $client->nom !!}
+                    
+                    <span id="alert" class="alert alert-sccess"> </span> 
 
-                <h3> Edition des Prix pour le client : {!! $client->nom !!} </h3>
-
-                {{--  --}}
+                    {{--  --}}
+                </div>
             </div>
 
+            <div class="card-body">
+                
+                <div class="table-responsive">
 
-            <div class="table-responsive">
+                    <form role="form" action="/client/edit_prix/{{ $client->id }}/edit" method="post" >
 
-                <form role="form" action="/client/edit_prix/{{ $client->id }}/edit" method="post" >
+                        @csrf
 
-                    @csrf
-
-                    <table class="table table-striped table-bordered text-nowrap w-100">
-                        
-                        <thead class="text-center">
-                            <tr>
-                                <th>Produit</th>
-                                <th>Prix</th>
-                                {{-- <th>Prix2</th> --}}
-                            </tr>
-                        </thead>
-                        
-                        <tbody class="text-center">
-                            @foreach ($produits as $produit)
+                        <table class="table table-striped table-bordered text-nowrap w-100">
+                            
+                            <thead class="text-center">
                                 <tr>
-                                    <td>{{$produit->nom ?? ''}}</td>
-                                    <td>
-                                        <input name="{{ $produit->id }}" value="{{ $produit->prix_gros ?? '0' }}" {{-- required --}} type="number" name="" class="form-control">
-                                    </td>
-                                    {{-- <td>{{$produit->nom ?? ''}}</td> --}}
-                                </tr>    
-                            @endforeach                        
-                        </tbody>
+                                    <th>Produit</th>
+                                    <th>Prix</th>
+                                    {{-- <th>Prix2</th> --}}
+                                </tr>
+                            </thead>
+                            
+                            <tbody class="text-center">
+                                @foreach ($produits as $produit)
+                                    <tr>
+                                        <td>{{$produit->nom ?? ''}}</td>
 
-                    </table>
-                    
+                                        @foreach ($prices as $price)
 
-                    <input type="submit" value="Valider" class="btn btn-outline-primary col-md-12">
-                    
-                    {{--  --}}
-                </form>
+                                            @if ($price->id_produit == $produit->id)
+
+                                                <?php $le_prix = $price->prix ?>
+
+                                                {{-- expr --}}
+                                            @endif
+
+                                            {{-- expr --}}
+                                        @endforeach
+
+                                        <td colspan="2">
+                                            <input name="{{ $produit->id }}" value="{{ $le_prix ?? '' }}" required type="number" class="form-control">
+                                        </td>
+                                        <td>DA</td>
+                                        
+
+                                    </tr>    
+                                @endforeach                        
+                            </tbody>
+
+                        </table>
+                        
+
+                        <input type="submit" value="Valider" class="btn btn-outline-primary col-md-12">
+                        
+                        {{--  --}}
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -66,6 +96,3 @@
 @endsection
 
 
-@section('scripts')
-
-@endsection

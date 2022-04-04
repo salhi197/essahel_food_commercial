@@ -154,7 +154,7 @@
                                     
                                     <li aria-haspopup="true"><a href="{{route('client.index')}}" class=""><i class="ti-server"></i> Clients</a></li>
                                     
-                                    <li aria-haspopup="true"><a href="/home/matiéres" class=""><i class="ti-book"></i> Matiéres</a></li>
+                                    <li aria-haspopup="true"><a href="/home/Livraisons" class=""><i class="ti-book"></i> Livraison</a></li>
 
                                     <li aria-haspopup="true"><a href="/home/Enseignants" class=""><i class="fa fa-mortar-board"></i> Enseignants</a></li>
                                     
